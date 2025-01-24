@@ -2,7 +2,7 @@
 
 Uses deep learning to classify audio clips of people speaking as deepfake or non-deepfake.
 
-Built in 2022
+Built in 2023
 
 ## Usage
 

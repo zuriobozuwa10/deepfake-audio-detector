@@ -15,17 +15,32 @@ args = arg_parser.parse_args()
 #load clips
 x = []
 for clip in args.clips:
-  audio, _ = librosa.load(clip)
-  mel_spectrogram = librosa.feature.melspectrogram(y=audio, n_mels=args.n_mels)
-  mel_spectrogram = librosa.power_to_db(mel_spectrogram, ref=np.max)
+    try:
+        # Add sample rate parameter and print diagnostic info
+        audio, _ = librosa.load(clip)
+        print(f"Loaded {clip}: length={len(audio)}")
+        
+        if len(audio) == 0:
+            raise ValueError(f"Audio file {clip} is empty or could not be loaded properly")
+            
+        mel_spectrogram = librosa.feature.melspectrogram(y=audio, n_mels=args.n_mels)
+        mel_spectrogram = librosa.power_to_db(mel_spectrogram, ref=np.max)
 
-  max_time_steps = 150
-  if mel_spectrogram.shape[1] < max_time_steps:
-      mel_spectrogram = np.pad(mel_spectrogram, ((0, 0), (0, max_time_steps - mel_spectrogram.shape[1])), mode='constant')
-  else:
-      mel_spectrogram = mel_spectrogram[:, :max_time_steps]
+        max_time_steps = 150
+        if mel_spectrogram.shape[1] < max_time_steps:
+            mel_spectrogram = np.pad(mel_spectrogram, ((0, 0), (0, max_time_steps - mel_spectrogram.shape[1])), mode='constant')
+        else:
+            mel_spectrogram = mel_spectrogram[:, :max_time_steps]
 
-  x.append(mel_spectrogram)
+        x.append(mel_spectrogram)
+        
+    except Exception as e:
+        print(f"Error processing {clip}: {str(e)}")
+        continue
+
+if not x:
+    print("No audio files were successfully processed. Exiting.")
+    exit(1)
 
 x = np.array(x)
 
