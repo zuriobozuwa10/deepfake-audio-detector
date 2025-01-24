@@ -36,7 +36,16 @@ predictions = model.predict(x)
 
 for p in predictions:
   print("prediction")
-  print("chance of bonafide: " + str((p[1]*100)) )
-  print("chance of spoof: " + str((p[0]*100)) )
-print(predictions)
+  print("chance of human: " + str(round(p[1]*100, 1)) + "%")
+  print("chance of AI: " + str(round(p[0]*100, 1)) + "%")
+print("keras (tensorflow) prediction object: " + str(predictions))
+
+print("--------------------------------")
+
+if p[1] > 0.5:
+  print("Human!")
+else:
+  print("AI!")
+
+
 
