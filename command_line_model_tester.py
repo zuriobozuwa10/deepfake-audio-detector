@@ -40,6 +40,7 @@ for clip in args.clips:
 
 if not x:
     print("No audio files were successfully processed. Exiting.")
+    print("Please make sure the audio files are in a supported format (flac or m4a).")
     exit(1)
 
 x = np.array(x)
