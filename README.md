@@ -24,7 +24,7 @@ Flac and m4a files are supported.
 
 Mp3 files are not supported. If you have an mp3, convert it to a supported format (google search for a conversion tool) before giving it to the model.
 
-## SF
+## SF
 
 Hello from San Francisco!
 
